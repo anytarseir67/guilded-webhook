@@ -88,7 +88,7 @@ class Webhook:
             return self._url == o._url
         return False
 
-    def send(self, *, content: str, embeds: List[Embed]) -> None:
+    def send(self, *, content: str=None, embeds: List[Embed]=None) -> None:
         if isinstance(embeds, Embed):
             embeds = [embeds]
         embeds = [embed._to_dict() for embed in embeds]
@@ -106,7 +106,7 @@ class AsyncWebhook:
             return self._url == o._url
         return False
 
-    async def send(self, *, content: str, embeds: List[Embed]) -> None:
+    async def send(self, *, content: str=None, embeds: List[Embed]=None) -> None:
         if isinstance(embeds, Embed):
             embeds = [embeds]
         embeds = [embed._to_dict() for embed in embeds]
