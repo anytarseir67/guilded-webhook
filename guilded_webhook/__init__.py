@@ -89,10 +89,15 @@ class Webhook:
         return False
 
     def send(self, *, content: str=None, embeds: List[Embed]=None) -> None:
-        if isinstance(embeds, Embed):
-            embeds = [embeds]
-        embeds = [embed._to_dict() for embed in embeds]
-        requests.post(self._url, json={'content': content, 'embeds': embeds})
+        if embeds:
+            if isinstance(embeds, Embed):
+                embeds = [embeds]
+            embeds = [embed._to_dict() for embed in embeds]
+            requests.post(self._url, json={'content': content, 'embeds': embeds})
+            return
+        else:
+            requests.post(self._url, json={'content': content})
+            return
 
 class AsyncWebhook:
     def __init__(self, url: str) -> None:
@@ -107,10 +112,13 @@ class AsyncWebhook:
         return False
 
     async def send(self, *, content: str=None, embeds: List[Embed]=None) -> None:
-        if isinstance(embeds, Embed):
-            embeds = [embeds]
-        embeds = [embed._to_dict() for embed in embeds]
-        print({'content': content, 'embeds': embeds})
         async with aiohttp.ClientSession() as session:
-            async with session.post(self._url, json={'content': content, 'embeds': embeds}):
-                return
+            if embeds:
+                if isinstance(embeds, Embed):
+                    embeds = [embeds]
+                embeds = [embed._to_dict() for embed in embeds]
+                async with session.post(self._url, json={'content': content, 'embeds': embeds}):
+                    return
+            else:
+                async with session.post(self._url, json={'content': content}):
+                    return
