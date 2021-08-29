@@ -1,8 +1,8 @@
 # guilded-webhook
 ## a basic wrapper for guilded's webhooks
 
-### [guilded support server](https://www.guilded.gg/i/Kkj6Jm4k?cid=e01438dd-c103-46f7-b702-129be5eee101&intent=chat)
-### [discord support server](https://discord.gg/fDQPCBybVJ)
+#### [guilded support server](https://www.guilded.gg/i/Kkj6Jm4k?cid=e01438dd-c103-46f7-b702-129be5eee101&intent=chat)
+#### [discord support server](https://discord.gg/fDQPCBybVJ)
 
 Basic example:
 
