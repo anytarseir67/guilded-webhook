@@ -25,7 +25,7 @@ def main():
 
 main()
 ```
-<img src="https://img.guildedcdn.com/ContentMedia/a49557916d785fa9b3a53207c0547e2f-Full.webp?w=210&h=64"/>
+![](https://img.guildedcdn.com/ContentMedia/a49557916d785fa9b3a53207c0547e2f-Full.webp?w=210&h=64)
 
 guilded-webhook also supports embeds (heavily inspired by discord.py's embeds)
 ```
@@ -42,7 +42,7 @@ async def main():
 
 asyncio.run(main())
 ```
-<img src="https://img.guildedcdn.com/ContentMedia/3514750c4e584bbf070c093b1facce91-Full.webp?w=501&h=621"/>
+![](https://img.guildedcdn.com/ContentMedia/3514750c4e584bbf070c093b1facce91-Full.webp?w=501&h=621)
 
 # docs
 ## class - AsyncWebHook
