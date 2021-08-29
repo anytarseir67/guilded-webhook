@@ -13,7 +13,7 @@ setup(name='guilded-webhook',
     long_description_content_type="text/markdown",
     author='anytarseir67',
     url='https://github.com/anytarseir67/guilded-webhook',
-    license="GPL 3",
+    license="GPLv3",
     packages=['guilded_webhook'],
     install_requires=requirements,
     )
