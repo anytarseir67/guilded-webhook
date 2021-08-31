@@ -1,5 +1,6 @@
 # guilded-webhook
-## a basic wrapper for guilded's webhooks
+## a basic wrapper for guilded's webhooks 
+##### (also works with discords, although this is due to both having very similar api's, any breaking changes on discord's side will not receive fixes)
 
 #### [guilded support server](https://www.guilded.gg/i/Kkj6Jm4k?cid=e01438dd-c103-46f7-b702-129be5eee101&intent=chat)
 #### [discord support server](https://discord.gg/fDQPCBybVJ)
