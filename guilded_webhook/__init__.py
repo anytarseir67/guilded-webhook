@@ -4,6 +4,7 @@ from datetime import datetime
 from typing import List
 
 class Embed:
+    __slots__ = ("_title", "_description", "_url", "_color", "_fields", "_author", "_footer", "_timestamp", "_image", "_thumbnail")
     def __init__(self, *, title: str=None, description: str=None, url: str=None, color: int=None, timestamp: datetime=None) -> None:
         self._title = title
         self._description = description
@@ -77,6 +78,7 @@ class Embed:
         return data
 
 class Webhook:
+    __slots__ = ("_url")
     def __init__(self, url: str) -> None:
         self._url = url
 
@@ -100,6 +102,7 @@ class Webhook:
             return
 
 class AsyncWebhook:
+    __slots__ = ("_url")
     def __init__(self, url: str) -> None:
         self._url = url
 
