@@ -1,22 +1,21 @@
 import aiohttp
 import requests
 from datetime import datetime
-from typing import List
-
+from typing import List, Dict, Union, Any
 class Embed:
     __slots__ = ("_title", "_description", "_url", "_color", "_fields", "_author", "_footer", "_timestamp", "_image", "_thumbnail")
     def __init__(self, *, title: str=None, description: str=None, url: str=None, color: int=None, timestamp: datetime=None) -> None:
         self._title = title
         self._description = description
         self._url = url
-        self._color = int(color)
-        self._fields = []
-        self._author = {}
-        self._footer = {}
+        self._color = color
+        self._fields: List[Dict[str, Union[str,bool]]] = [] 
+        self._author: Dict[str, str] = {}
+        self._footer: Dict[str, str] = {}
         self._timestamp = timestamp
-        self._image = {}
-        #self._video = {}
-        self._thumbnail = {}
+        self._image: Dict[str, Union[str, int]] = {}
+        #self._video: Dict[str, Union[str, int]] = {}
+        self._thumbnail: Dict[str, Union[str, int]] = {}
 
     def add_field(self, *, title: str, value: str, inline: bool=False) -> None:
         self._fields.append({"name": title, "value": value, "inline": inline})
@@ -56,7 +55,7 @@ class Embed:
             self._thumbnail["width"] = width
 
     def _to_dict(self) -> dict:
-        data = {}
+        data: Dict[Any, Any] = {}
         data["title"] = self._title
         data["description"] = self._description
         data["url"] = self._url
@@ -90,12 +89,12 @@ class Webhook:
             return self._url == o._url
         return False
 
-    def send(self, *, content: str=None, embeds: List[Embed]=None) -> None:
+    def send(self, *, content: str=None, embeds: Union[List[Embed], Embed]=None) -> None:
         if embeds:
             if isinstance(embeds, Embed):
                 embeds = [embeds]
-            embeds = [embed._to_dict() for embed in embeds]
-            requests.post(self._url, json={'content': content, 'embeds': embeds})
+            _embeds = [embed._to_dict() for embed in embeds]
+            requests.post(self._url, json={'content': content, 'embeds': _embeds})
             return
         else:
             requests.post(self._url, json={'content': content})
@@ -114,13 +113,13 @@ class AsyncWebhook:
             return self._url == o._url
         return False
 
-    async def send(self, *, content: str=None, embeds: List[Embed]=None) -> None:
+    async def send(self, *, content: str=None, embeds: Union[List[Embed], Embed]=None) -> None:
         async with aiohttp.ClientSession() as session:
             if embeds:
                 if isinstance(embeds, Embed):
                     embeds = [embeds]
-                embeds = [embed._to_dict() for embed in embeds]
-                async with session.post(self._url, json={'content': content, 'embeds': embeds}):
+                _embeds = [embed._to_dict() for embed in embeds]
+                async with session.post(self._url, json={'content': content, 'embeds': _embeds}):
                     return
             else:
                 async with session.post(self._url, json={'content': content}):
