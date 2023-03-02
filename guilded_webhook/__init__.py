@@ -2,11 +2,17 @@ import aiohttp
 import requests
 from typing import List, Union
 from .embed import Embed
+from .exceptions import BadRequestError
+
+class Empty:
+    ...
 
 class Webhook:
-    __slots__ = ("_url")
-    def __init__(self, url: str) -> None:
+    __slots__ = ("_url", "avatar", "username")
+    def __init__(self, url: str, *, avatar: str=None, username: str=None) -> None:
         self._url = url
+        self.avatar = avatar
+        self.username = username
 
     def __repr__(self) -> str:
         return self._url
@@ -16,19 +22,32 @@ class Webhook:
             return self._url == o._url
         return False
 
-    def send(self, *, content: str=None, embeds: Union[List[Embed], Embed]=None) -> None:
+    def send(self, *, content: str=None, embeds: Union[List[Embed], Embed]=None, avatar: str=Empty, username: str=Empty) -> None:
+        json = {'content': content}
+        if avatar == Empty:
+            avatar = self.avatar
+        if avatar != None:
+            json['avatar_url'] = avatar
+
+        if username == Empty:
+            username = self.username
+        if username != None:
+            json['username'] = username
+
         if embeds:
             if isinstance(embeds, Embed):
                 embeds = [embeds]
             _embeds = [embed._to_dict() for embed in embeds]
-            requests.post(self._url, json={'content': content, 'embeds': _embeds})
-            return
-        else:
-            requests.post(self._url, json={'content': content})
-            return
+            json['embed'] = _embeds
+
+        r = requests.post(self._url, json=json)
+        resp = r.json()
+
+        if 'code' in resp:
+            raise BadRequestError(resp['message'])
 
 class AsyncWebhook:
-    __slots__ = ("_url")
+    __slots__ = ("_url", "avatar", "username")
     def __init__(self, url: str) -> None:
         self._url = url
 
@@ -40,14 +59,27 @@ class AsyncWebhook:
             return self._url == o._url
         return False
 
-    async def send(self, *, content: str=None, embeds: Union[List[Embed], Embed]=None) -> None:
+    async def send(self, *, content: str=None, embeds: Union[List[Embed], Embed]=None, avatar: str=Empty, username: str=Empty) -> None:
+        json = {'content': content}
+        if avatar == Empty:
+            avatar = self.avatar
+        if avatar != None:
+            json['avatar_url'] = avatar
+
+        if username == Empty:
+            username = self.username
+        if username != None:
+            json['username'] = username
+
+        if embeds:
+            if isinstance(embeds, Embed):
+                embeds = [embeds]
+            _embeds = [embed._to_dict() for embed in embeds]
+            json['embed'] = _embeds
+
         async with aiohttp.ClientSession() as session:
-            if embeds:
-                if isinstance(embeds, Embed):
-                    embeds = [embeds]
-                _embeds = [embed._to_dict() for embed in embeds]
-                async with session.post(self._url, json={'content': content, 'embeds': _embeds}):
-                    return
-            else:
-                async with session.post(self._url, json={'content': content}):
-                    return
+            async with session.post(self._url, json=json) as r:
+                resp = await r.json()
+
+        if 'code' in resp:
+            raise BadRequestError(resp['message'])
