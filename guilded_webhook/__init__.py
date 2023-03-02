@@ -48,7 +48,7 @@ class Webhook:
 
 class AsyncWebhook:
     __slots__ = ("_url", "avatar", "username")
-    def __init__(self, url: str) -> None:
+    def __init__(self, url: str, *, avatar: str=None, username: str=None) -> None:
         self._url = url
 
     def __repr__(self) -> str:

@@ -50,14 +50,24 @@ asyncio.run(main())
 
 # docs
 ## class - AsyncWebHook
+* ### (arg) str - url - webhook url.
+* ### (kwarg) str - avatar - optional avatar override (image url).
+* ### (kwarg) str - username - optional username override.
 * ### (async) method - send 
   * ####  (kwarg) string - content
   * #### (kwarg) List[Embed] - embeds
+  * #### (kwarg) str - avatar - optional avatar override (overrides instance avatar) (image url).
+  * #### (kwarg) str - username - optional username override (overrides instance username)
 
 ## class - WebHook
+* ### (arg) str - url - webhook url.
+* ### (kwarg) str - avatar - optional avatar override (image url).
+* ### (kwarg) str - username - optional username override.
 * ### method - send 
   * ####  (kwarg) string - content
   * #### (kwarg) List[Embed] - embeds
+  * #### (kwarg) str - avatar - optional avatar override (overrides instance avatar) (image url).
+  * #### (kwarg) str - username - optional username override (overrides instance username)
 
 ## class - Embed
 * ### (kwarg) str - title
