@@ -58,6 +58,7 @@ asyncio.run(main())
   * #### (kwarg) List[Embed] - embeds
   * #### (kwarg) str - avatar - optional avatar override (overrides instance avatar) (image url).
   * #### (kwarg) str - username - optional username override (overrides instance username)
+  * #### (kwarg) File - file to upload with the message
 
 ## class - WebHook
 * ### (arg) str - url - webhook url.
@@ -68,6 +69,7 @@ asyncio.run(main())
   * #### (kwarg) List[Embed] - embeds
   * #### (kwarg) str - avatar - optional avatar override (overrides instance avatar) (image url).
   * #### (kwarg) str - username - optional username override (overrides instance username)
+  * #### (kwarg) File - file to upload with the message
 
 ## class - Embed
 * ### (kwarg) str - title
@@ -94,3 +96,7 @@ asyncio.run(main())
   * #### (kwarg) str - url
   * #### (kwarg) int - height
   * #### (kwarg) int - width
+
+## class - File
+* ### (arg) Union[str, bytes, os.PathLike, io.BufferedIOBase] - fp - filelike object to upload
+* ### (arg) str - filename - filename to upload as (required when using BytesIO and similar)
