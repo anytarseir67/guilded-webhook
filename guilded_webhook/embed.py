@@ -57,8 +57,9 @@ class Embed:
         data: Dict[str, Any] = {}
         data["title"] = self._title
         data["description"] = self._description
-        data["url"] = self._url
         data["color"] = self._color
+        if self._url:
+            data["url"] = self._url
         if len(self._fields) != 0:
             data["fields"] = self._fields
         if self._author != {}:
